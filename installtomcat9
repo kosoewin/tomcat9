@@ -1,0 +1,38 @@
+sudo useradd -r tomcat
+sudo chown -R $( id -u ):$( id -g )
+
+
+vim /etc/systemd/system/tomcat.service
+
+[Unit]
+Description=Apache Tomcat
+After=syslog.target network.target
+
+[Service]
+Type=forking
+User=tomcat
+Group=tomcat
+
+
+Environment=CATALINA_PID=/usr/local/tomcat9/temp/tomcat.pid
+Environment=CATALINA_HOME=/usr/local/tomcat9
+Environment=CATALINA_BASE=/usr/local/tomcat9
+
+ExecStart=/usr/local/tomcat9/bin/catalina.sh start
+ExecStop=/usr/local/tomcat9/bin/catalina.sh stop
+RestartSec=12 Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+
+systemctl daemon-reload
+
+
+tomcat-user
+<role rolename="admin-gui,manger-gui"/>
+<user username="admin" password="admin" roles="admin-gui,manager-gui"/>
+
+vim webapps/manager/META-INF/context.xml
+
+allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> ``` It should read: ``` allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1 |.*" />
