@@ -1,0 +1,7 @@
+
+#installing xclip on ubuntu
+ sudo apt install -y xclip
+ 
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
+ 
